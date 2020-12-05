@@ -1,6 +1,8 @@
 package com.huang.timberland.servlet;
 
+import com.google.gson.Gson;
 import com.huang.timberland.domain.Cloth;
+import com.huang.timberland.domain.Style;
 import com.huang.timberland.service.ClothService;
 import com.huang.timberland.web.CriteriaCloth;
 import com.huang.timberland.web.Page;
@@ -12,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "ClothesServlet", urlPatterns = "/ClothesServlet")
 public class ClothesServlet extends HttpServlet {
@@ -83,7 +88,25 @@ public class ClothesServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath()+"/error-1.jsp");
             return;
         }
+        List<Style> styleList = clothService.getStyles(cloth.getC_id());
+        request.setAttribute("styleList", styleList);
         request.setAttribute("cloth", cloth);
         request.getRequestDispatcher("/cloth.jsp").forward(request, response);
     }
+
+    protected void updateCloth(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int styleId = Integer.parseInt(request.getParameter("id"));
+        Style style = clothService.getStyle(styleId);
+        // 传回json数据
+        Map<String, Object> result = new HashMap<>();
+        result.put("styleNum", style.getSt_style());
+        result.put("picPath", style.getSt_image());
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(result);
+        response.setContentType("text/javascript");
+        response.getWriter().print(jsonStr);
+    }
+
+
+
 }

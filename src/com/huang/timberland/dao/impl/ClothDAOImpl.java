@@ -1,19 +1,18 @@
 package com.huang.timberland.dao.impl;
 
 import com.huang.timberland.dao.ClothDAO;
-import com.huang.timberland.dao.Dao;
 import com.huang.timberland.domain.Cloth;
 import com.huang.timberland.web.CriteriaCloth;
 import com.huang.timberland.web.Page;
 
 import java.util.List;
 
-public class ClothDaoImpl extends BaseDAO<Cloth> implements ClothDAO {
+public class ClothDAOImpl extends BaseDAO<Cloth> implements ClothDAO {
 
     @Override
     public Cloth getCloth(int id) {
         String sql = "select c_id,c_price,c_pic,c_describe,c_name from clothing where " +
-                "id=?";
+                "c_id=?";
         return query(sql, id);
     }
 

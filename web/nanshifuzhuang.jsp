@@ -17,7 +17,6 @@
 		$(function(){
 
 			$("#pageNo").change(function(){
-				console.log("111");
 				var val = $(this).val();
 				val = $.trim(val);
 
@@ -47,54 +46,22 @@
 				window.location.href = href;
 			});
 		})
-
 	</script>
+
 	<%@ include file="queryCondition.jsp" %>
 </head>
 <body>
-<div id="header">
-	<div id="small-menu">
-		<ul class="small-menu">
-			<li ><a href="Timberland.html">首页</a></li>
-			<li ><a href="xiaiqingdan.html">清单/</a><a href="gouwuche.html">购物车</a></li>
-			<li ><a href="zhuce.html">注册/</a><a href="login.html">登陆</a></li>
-		</ul>
-	</div>
-</div>
-<div id="primary-menu">
-	<div id="logo" ><img src="image/logo.png"></div>
-	<div id="big-menu">
-		<ul >
-
-			<li ><a href="nanzhuang.html">男装</a>
-				<ul >
-					<li><a href="">男士服装</a></li>
-					<li><a href="">T恤衫</a></li>
-					<li><a href="">卫衣</a></li>
-					<li><a href="">POLO衫</a></li>
-					<li><a href="">外套</a></li>
-					<li><a href="">毛衣</a></li>
-					<li><a href="">衬衫</a></li>
-					<li><a href="">长裤/短裤</a></li>
-				</ul>
-			</li>
-			<li ><a href="nvzhuang.html">女装</a>
-				<ul >
-					<li><a href="">女士服装</a></li>
-					<li><a href="">T恤衫</a></li>
-					<li><a href="">卫衣</a></li>
-					<li><a href="">连衣裙</a></li>
-					<li><a href="">外套</a></li>
-					<li><a href="">衬衫</a></li>
-					<li><a href="">长裤/短裤</a></li>
-				</ul>
-			</li>
-			<li ><a href="">官方旗舰店</a></li>
-		</ul>
-	</div>
-	<div id="search" ><input type="text" name="" placeholder="开始搜索" style="height: 30px;background-color:transparent;color: white;top: 5px;"></div>
-</div>
-
+<%@ include file="top.jsp"%>
+<c:if test="${isSuccess eq 1}">
+	<script type="text/javascript" defer="defer">
+		window.onload = function() {
+			alert('登录成功');
+		}
+	</script>
+	<%
+		request.setAttribute("isSuccess", 0);
+	%>
+</c:if>
 <div id="daohang">
 	<p><a href="">主页</a>><a href="">男装</a>><a href="">男士服装</a></p>
 	<hr>
@@ -143,7 +110,7 @@
 	</div>
 	<div class="picgroup">
 		<for:forEach items="${clothpage.list}" var="cloth">
-			<a href="ClothesServlet?method=getCloth&pageNo=${computerpage.pageNo }&id=${computer.id}">
+			<a href="ClothesServlet?method=getCloth&pageNo=${clothpage.pageNo }&id=${cloth.c_id}">
 			<div class="cloth3">
 				<img src="${cloth.c_pic}">
 				<br>

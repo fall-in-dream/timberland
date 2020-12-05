@@ -101,39 +101,21 @@
 	<div id="main-zhuce">
 		<h2>用户注册</h2>
 		<div id="login">
-			<form action="" name="regForm" method="get">
+			<form action="<%=request.getContextPath()%>/UserServlet" name="regForm" method="get">
 				<div id="username">
 					<span>用户名：  <input type="text" name="username" placeholder="请输入用户名"></span>
 				</div>
 
-				<div id="password1">
-					<span>密    码：    <input type="password" name="password1" placeholder="请输入密码"></span>
+				<div id="password">
+					<span>密    码：    <input type="password" name="password" placeholder="请输入密码"></span>
 				</div>
 
 				<div id="password2">
 					<span>确认密码：<input type="password" name="password2" placeholder="请再次输入密码" ></span>
 				</div>
 
-				<div id="mail">
-					<span>邮件地址：<input type="text" name="mail" placeholder="请填写正确的邮箱地址"></span>
-				</div>
-
-				<div id="sex">
-					<span>性别：</span><input type="radio" name="sex" value="男"><span>男</span>
-					<input type="radio" name="sex" value="女"><span>女</span>
-				</div>
-
-				<div id="age">
-					<span>年龄：</span>
-					<select name="age">
-						<option value="1" selected="select"></option>
-						<option value="2" > 1~20</option>
-						<option value="3" > 21~40</option>
-						<option value="4" > 20以上</option>
-					</select>
-				</div>
-
 				<div id="button">
+					<input type="hidden" name="method" value="createUser">
 					<input type="reset" name="reset" value="重置" style="height: 40px;width: 80px ; font-family: 微软雅黑;font-weight:bold;font-size: 16px; ">
 					<input type="submit" name="ok" value="确认" style="height: 40px;width: 80px ; font-family: 微软雅黑;font-weight:bold;font-size: 16px; " onclick="handsubmit();">
 				</div>

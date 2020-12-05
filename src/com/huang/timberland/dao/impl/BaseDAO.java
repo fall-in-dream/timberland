@@ -1,6 +1,6 @@
 package com.huang.timberland.dao.impl;
 
-import com.huang.timberland.dao.Dao;
+import com.huang.timberland.dao.DAO;
 import com.huang.timberland.db.JDBCUtils;
 import com.huang.timberland.utils.ReflectionUtils;
 import org.apache.commons.dbutils.QueryRunner;
@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 
-public class BaseDAO<T> implements Dao<T> {
+public class BaseDAO<T> implements DAO<T> {
 	
 	private QueryRunner queryRunner = new QueryRunner();
 

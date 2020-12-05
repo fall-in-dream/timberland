@@ -6,7 +6,7 @@ import java.util.List;
  * Dao 接口, 定义 Dao 的基本操作, 由 BaseDao 提供实现. 
  * @param <T>: Dao 实际操作的泛型类型
  */
-public interface Dao<T> {
+public interface DAO<T> {
 	
 	/**
 	 * 执行 INSERT 操作, 返回插入后的记录的 ID

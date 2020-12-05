@@ -1,7 +1,7 @@
 function handsubmit(){
 		var userName=document.forms[0].username.value;
 		var password2=document.forms[0].password2.value;
-		var password1=document.forms[0].password1.value;
+		var password=document.forms[0].password.value;
 		var a = -1;
 		var age = document.forms[0].age.value;
 		a=document.forms[0].mail.value.indexOf("@");
@@ -10,9 +10,9 @@ function handsubmit(){
 			alert("用户名不为空！！！");
 		}
 		
-		else if(password1!=password2){
+		else if(password!=password2){
 			alert("密码输入不一致！！！");
-		}else if(password1.length<6){
+		}else if(password.length<6){
 			alert("密码不能少于6位！！！");
 		}
 		
