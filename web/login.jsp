@@ -13,6 +13,8 @@
 	<script type="text/javascript" src="js/myfocus-2.0.1.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/mF_fancy.css">
 	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 	<%@ include file="top.jsp"%>
@@ -23,7 +25,7 @@
 			}
 		</script>
 		<%
-			request.setAttribute("isSuccess", 0);
+			request.removeAttribute("isSuccess");
 		%>
 	</c:if>
 	<c:if test="${isSuccess eq 2}">
@@ -33,7 +35,7 @@
 			}
 		</script>
 		<%
-			request.setAttribute("isSuccess", 0);
+			request.removeAttribute("isSuccess");
 		%>
 	</c:if>
 	<div id="main-login">
@@ -48,7 +50,6 @@
 					<span>密&nbsp;&nbsp;&nbsp;&nbsp;码：    <input type="password" name="password" placeholder="请输入密码"></span>
 				</div>
 
-				
 
 				<div id="button">
 					<input type="hidden" name="method" value="checkUser">

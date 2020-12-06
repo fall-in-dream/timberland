@@ -1,6 +1,5 @@
 #main-gouwuche{
 	width: 72%;
-	height: 600px;
 	margin: 0 auto;
 }
 h2{
@@ -18,29 +17,35 @@ p{
 	text-align: center;
 	line-height: 150px;
 }
-img{
+td img{
 	position: relative;
 	float: left;
+	width: 150px;
+	height: 150px;
+}
 
-}
 tr{
+
 	text-align: center;
 }
+
 .num{
-	width: 20px;
+	width: 34px;
+	height: 34px;
 	text-align: center;
 }
-.btn{
+/*.btn{
 	width: 20px;
 	height: 20px;
-}
+}*/
 .price{
 	width: 60px;
 	border: 0;
 }
-th{
+thead th{
 	font-family: 微软雅黑;
 	font-weight: normal;
+	text-align: center;
 	background-color: rgb(232,232,232);
 }
 tfoot {

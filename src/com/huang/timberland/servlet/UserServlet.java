@@ -62,8 +62,8 @@ public class UserServlet extends HttpServlet {
         if (user.getU_account().equals(username) && user.getU_password().equals(password)) {
             request.setAttribute("isSuccess", 1);
             HttpSession session = request.getSession();
-            session.setAttribute("username", username);
-            request.getRequestDispatcher("/ClothesServlet?method=getClothes").forward(request, response);
+            session.setAttribute("user", user);
+            request.getRequestDispatcher("/ClothesServlet?method=userInfoInit").forward(request, response);
         } else {
             request.setAttribute("isSuccess", 2);
         }

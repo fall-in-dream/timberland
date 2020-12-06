@@ -12,7 +12,8 @@
 
 	<link rel="stylesheet" type="text/css" href="css/mF_fancy.css">
 	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<style type="text/css">
 		#main-zhuce{
 			width: 72%;
@@ -106,9 +107,10 @@
 					<span>用户名：  <input type="text" name="username" placeholder="请输入用户名"></span>
 				</div>
 
-				<div id="password">
-					<span>密    码：    <input type="password" name="password" placeholder="请输入密码"></span>
+				<div id="password1">
+					<span>密&nbsp;&nbsp;&nbsp;&nbsp;码：    <input type="password" name="password" placeholder="请输入密码"></span>
 				</div>
+
 
 				<div id="password2">
 					<span>确认密码：<input type="password" name="password2" placeholder="请再次输入密码" ></span>

@@ -10,6 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="css/nanshifuzhuang_css.css">
 	<script type="text/javascript" src="js/myfocus-2.0.1.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/mF_fancy.css">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript">
@@ -59,7 +60,7 @@
 		}
 	</script>
 	<%
-		request.setAttribute("isSuccess", 0);
+		request.removeAttribute("isSuccess");
 	%>
 </c:if>
 <div id="daohang">

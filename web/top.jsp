@@ -7,17 +7,24 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <div id="header">
+
     <div id="small-menu">
         <ul class="small-menu">
             <li ><a href="Timberland.jsp">首页</a></li>
-            <li ><a href="xiaiqingdan.jsp">清单/</a><a href="gouwuche.jsp">购物车</a></li>
+            <li >
+                <a href="xiaiqingdan.jsp">清单</a>
+                &nbsp;&nbsp;&nbsp;
+
+            </li>
             <c:choose>
-                <c:when test="${sessionScope.username eq null}">
+                <c:when test="${sessionScope.user.u_account eq null}">
                     <li><a href="UserServlet?method=forwardPage&page=zhuce">注册/</a><a href="UserServlet?method=forwardPage&page=login">登陆</a></li>
                 </c:when>
                 <c:otherwise>
-                    <li><a href="#">用户名：${sessionScope.username}</a></li>
+                    <li><a href="ClothesServlet?method=getShoppingCart">购物车<span class="badge">${sessionScope.itemNum}</span></a></li>
+                    <li><a href="#">用户名：${sessionScope.user.u_account}</a></li>
                 </c:otherwise>
             </c:choose>
 
@@ -31,7 +38,7 @@
 
             <li ><a href="nanzhuang.html">男装</a>
                 <ul >
-                    <li><a href="">男士服装</a></li>
+                    <li><a href="ClothesServlet?method=getClothes">男士服装</a></li>
                     <li><a href="">T恤衫</a></li>
                     <li><a href="">卫衣</a></li>
                     <li><a href="">POLO衫</a></li>
