@@ -14,7 +14,7 @@
         <ul class="small-menu">
             <li ><a href="Timberland.jsp">首页</a></li>
             <li >
-                <a href="ClothesServlet?method=order.jsp">订单</a>
+                <a href="ClothesServlet?method=getIndentsByUser">订单</a>
                 &nbsp;&nbsp;&nbsp;
 
             </li>

@@ -53,6 +53,11 @@
             width: 700px;
             margin: 0 auto;
         }
+        .exit {
+            position: absolute;
+            right: 1px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -76,23 +81,29 @@
 
     function promName()
     {
-        var name=prompt("请输入修改后的昵称","");//将输入的内容赋给变量 name ，
-        //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默认值
-        if(name)//如果返回的有内容
-        {
-            alert("欢迎您："+ name)
+        if ($("#alter").html().trim() === "") {
+            alert("昵称不能为空");
+        } else {
+            var name = prompt("请输入修改后的昵称", "");//将输入的内容赋给变量 name ，
+            //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默认值
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "UserServlet?method=alertUserName&name=" + name,//url
+                contentType: "application/json;charset=utf-8",
+                success: function (result) {
+                    console.log(result);
+                    alert(result.info);
+                    $("#name").text("昵称：" + name);
+                },
+                error: function () {
+                    alert("异常！");
+                }
+            });
         }
     }
-    function promMoney()
-    {
-        window.open ('page.html','newwindow','height=100,width=400,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
-        var name=prompt("请输入要充值的金额","");//将输入的内容赋给变量 name ，
-        //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默认值
-        if(name)//如果返回的有内容
-        {
-            alert("欢迎您："+ name)
-        }
-    }
+
 
     function recharge() {
         $.ajax({
@@ -107,7 +118,7 @@
                 alert(info);
                 if (info === "充值成功") {
                     closeWindow();
-                    $("#balance").html("余额：NYC:" + result.money);
+                    $("#balance").html("余额：CNY" + result.money);
                 }
             },
             error : function() {
@@ -152,12 +163,12 @@
         </div>
         <table class="table table-striped">
             <tr>
-                <td class="col-md-4" id="balance">余额：NYC:${sessionScope.user.u_balance}</td>
+                <td class="col-md-4" id="balance">余额：CNY${sessionScope.user.u_balance}</td>
                 <td class="col-md-1 text-right" href="#"><a href="javascript:void(0);" class="btn btn-info" onclick="showWindow()">充值</a></td>
             </tr>
             <tr>
-                <td class="col-md-4">昵称：${sessionScope.user.u_account}</td>
-                <td class="col-md-1 text-right" href="#"><a href="javascript:void(0);" class="btn btn-info" onclick="promName()">修改</a></td>
+                <td class="col-md-4" id="name">昵称：${sessionScope.user.u_account}</td>
+                <td class="col-md-1 text-right" href="#"><a href="javascript:void(0);" class="btn btn-info" onclick="promName()" id="alter">修改</a></td>
             </tr>
         </table>
     </div>
@@ -171,6 +182,7 @@
     <!-- 标题 -->
     <div style="background: #F8F7F7; width: 100%; height: 2rem; font-size: 1rem; line-height: 2rem; border: 1px solid #999; text-align: center;" >
         充值
+        <span class="exit" onclick="closeWindow()">x</span>
     </div>
     <!-- 内容 -->
 

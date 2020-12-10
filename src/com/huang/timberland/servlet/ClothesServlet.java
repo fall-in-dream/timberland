@@ -16,10 +16,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @WebServlet(name = "ClothesServlet", urlPatterns = "/ClothesServlet")
 public class ClothesServlet extends HttpServlet {
@@ -177,6 +174,7 @@ public class ClothesServlet extends HttpServlet {
 
     protected void settleAccounts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = (User)request.getSession().getAttribute("user");
+        double totalMoney = Double.parseDouble(request.getParameter("totalMoney"));
         boolean isSuccess = clothService.pay(user);
         if (isSuccess) {
             List<ShoppingCartItem> shoppingCartItems = clothService.getShoppingCartAllItem(user.getU_id());
@@ -184,6 +182,7 @@ public class ClothesServlet extends HttpServlet {
             indent.setI_num(String.valueOf(System.currentTimeMillis()));
             indent.setI_state('0');
             indent.setU_id(user.getU_id());
+            indent.setI_money(totalMoney);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Calendar calendar = Calendar.getInstance();
             indent.setI_time(Timestamp.valueOf(sdf.format(calendar.getTime())));
@@ -202,5 +201,18 @@ public class ClothesServlet extends HttpServlet {
             request.setAttribute("isSuccess", -1);
             userInfoInit(request, response);
         }
+    }
+
+    protected void getIndentsByUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User user = (User)request.getSession().getAttribute("user");
+        List<Indent> indents = clothService.getIndentsByUserId(user.getU_id());
+        Map<Indent, List<IndentInfo>> indentListMap = new LinkedHashMap<>();
+        for (Indent indent: indents) {
+            long indentId = indent.getI_id();
+            List<IndentInfo> indentInfo = clothService.getAllInfoByIndentId(indentId);
+            indentListMap.put(indent, indentInfo);
+        }
+        request.setAttribute("indentListMap", indentListMap);
+        request.getRequestDispatcher("/indent.jsp").forward(request, response);
     }
 }

@@ -5,6 +5,7 @@ import com.huang.timberland.dao.impl.*;
 import com.huang.timberland.domain.*;
 import com.huang.timberland.web.CriteriaCloth;
 import com.huang.timberland.web.Page;
+import com.sun.xml.internal.bind.v2.runtime.output.IndentingUTF8XmlOutput;
 
 import java.util.List;
 
@@ -94,5 +95,19 @@ public class ClothService {
             userDAO.alterUser(user);
             return true;
         }
+    }
+
+    public List<Indent> getIndentsByUserId(int userId) {
+        return indentDAO.getIndentsByUserId(userId);
+    }
+
+    public List<IndentInfo> getAllInfoByIndentId(long indentId) {
+        List<IndentInfo> indentInfos = indentInfoDAO.getAllInfoByIndentId(indentId);
+        for (IndentInfo indentInfo: indentInfos) {
+            indentInfo.setStyle(styleDAO.getStyle(indentInfo.getSt_id()));
+            indentInfo.getStyle().setClothing(clothDAO.getCloth(indentInfo.getStyle().getC_id()));
+            System.out.println(indentInfo.getStyle().getClothing());
+        }
+        return indentInfos;
     }
 }

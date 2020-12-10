@@ -9,6 +9,7 @@ public class Indent {
     String i_num;
     Timestamp i_time;
     int i_state;
+    double i_money;
 
     public long getI_id() {
         return i_id;
@@ -48,5 +49,13 @@ public class Indent {
 
     public void setI_state(int i_state) {
         this.i_state = i_state;
+    }
+
+    public double getI_money() {
+        return i_money;
+    }
+
+    public void setI_money(double i_money) {
+        this.i_money = i_money;
     }
 }

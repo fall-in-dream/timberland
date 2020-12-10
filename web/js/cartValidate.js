@@ -35,7 +35,8 @@
 			
 			if(!flag){
 				alert("输入的数量不合法!");
-				$(this).val($(this).attr("step"));
+				/*$(this).val($(this).attr("step"));*/
+                $(this).val($(this).attr("value"));
 				return;
 			}
 
@@ -78,7 +79,7 @@
 				var itemNum = data.itemNum;
 				$tr.find("span").html(itemMoney);
 				$(".badge").html(itemNum);
-				$("#totalMoney").html("商品总金额：CNY:" + totalMoney);
+				$("#totalMoney").html("商品总金额：CNY" + totalMoney);
 			},"JSON");
 			
 		});

@@ -64,13 +64,18 @@ public class UserServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         User user = userService.getUser(username);
-        if (user.getU_account().equals(username) && user.getU_password().equals(password)) {
+        if (user == null) {
+            request.setAttribute("isSuccess", 2);
+            request.getRequestDispatcher("/UserServlet?method=forwardPage&page=login").forward(request, response);
+        } else if (user.getU_account().equals(username) && user.getU_password().equals(password)) {
             request.setAttribute("isSuccess", 1);
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
             request.getRequestDispatcher("/ClothesServlet?method=userInfoInit").forward(request, response);
+
         } else {
             request.setAttribute("isSuccess", 2);
+            request.getRequestDispatcher("/UserServlet?method=forwardPage&page=login").forward(request, response);
         }
     }
 
@@ -119,6 +124,23 @@ public class UserServlet extends HttpServlet {
                 }
             }
         }
+
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(result);
+        response.setContentType("text/javascript");
+        response.setCharacterEncoding("utf-8");
+        response.getWriter().print(jsonStr);
+    }
+
+    protected void alertUserName(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        User user = (User)request.getSession().getAttribute("user");
+        String name = request.getParameter("name");
+        System.out.println(name);
+        System.out.println(request.getParameter("jjj"));
+        user.setU_account(name);
+        userService.alterUserName(user);
+        Map<String, Object> result = new HashMap<>();
+        result.put("info","修改名称成功");
         Gson gson = new Gson();
         String jsonStr = gson.toJson(result);
         response.setContentType("text/javascript");

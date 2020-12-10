@@ -5,6 +5,7 @@ public class IndentInfo {
     private long i_id;
     private int st_id;
     private int f_quantity;
+    private Style style;
 
     public long getF_id() {
         return f_id;
@@ -36,5 +37,13 @@ public class IndentInfo {
 
     public void setF_quantity(int f_quantity) {
         this.f_quantity = f_quantity;
+    }
+
+    public Style getStyle() {
+        return style;
+    }
+
+    public void setStyle(Style style) {
+        this.style = style;
     }
 }

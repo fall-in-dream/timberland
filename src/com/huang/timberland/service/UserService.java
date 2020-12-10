@@ -27,4 +27,8 @@ public class UserService {
         userDAO.alterUser(user);
         bankCardDAO.alterBalance(bankCard);
     }
+
+    public void alterUserName(User user) {
+        userDAO.alterUser(user);
+    }
 }

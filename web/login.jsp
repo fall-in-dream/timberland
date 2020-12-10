@@ -31,7 +31,7 @@
 	<c:if test="${isSuccess eq 2}">
 		<script type="text/javascript" defer="defer">
 			window.onload = function () {
-				alert("密码错误，登录失败");
+				alert("账号或密码输入错误，登录失败");
 			}
 		</script>
 		<%

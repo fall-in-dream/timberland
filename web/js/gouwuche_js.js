@@ -51,5 +51,5 @@ function _2jianyi(){
 }
 
 function pay(){
-	window.location.href="ClothesServlet?method=settleAccounts"
+	window.location.href="ClothesServlet?method=settleAccounts&totalMoney=" + $("#totalMoney").html().split("Y")[1];
 }

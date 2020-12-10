@@ -37,13 +37,13 @@
 						<td>${shoppingCartItem.style.st_color}</td>
 						<td>${shoppingCartItem.style.clothing.c_price}</td>
 						<td><input type="text" id="num1" name="${shoppingCartItem.sc_id}" value="${shoppingCartItem.sc_num}" class="num"></td>
-						<td>CNY:<span>${shoppingCartItem.style.clothing.c_price * shoppingCartItem.sc_num}</span></td>
+						<td>CNY<span>${shoppingCartItem.style.clothing.c_price * shoppingCartItem.sc_num}</span></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 			<tfoot style="width: 300px;">
 				<tr style="width: 200px;">
-					<td colspan="5" id="totalMoney" style="width: 200px;">商品总金额：CNY:${money}</td>
+					<td colspan="5" id="totalMoney" style="width: 200px;">商品总金额：CNY${money}</td>
 				</tr>
 			</tfoot>
 		</table>
