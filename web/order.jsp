@@ -15,7 +15,7 @@
 		<div id="small-menu">
 			<ul class="small-menu">
 				<li ><a href="Timberland.jsp">首页</a></li>
-				<li ><a href="xiaiqingdan.jsp">清单/</a><a href="gouwuche.jsp">购物车</a></li>
+				<li ><a href="order.jsp">清单/</a><a href="gouwuche.jsp">购物车</a></li>
 				<li ><a href="zhuce.jsp">注册/</a><a href="login.jsp">登陆</a></li>
 			</ul>
 		</div>

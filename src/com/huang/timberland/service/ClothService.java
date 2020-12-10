@@ -1,14 +1,8 @@
 package com.huang.timberland.service;
 
-import com.huang.timberland.dao.ClothDAO;
-import com.huang.timberland.dao.ShoppingCartDAO;
-import com.huang.timberland.dao.StyleDAO;
-import com.huang.timberland.dao.impl.ClothDAOImpl;
-import com.huang.timberland.dao.impl.ShoppingCartImpl;
-import com.huang.timberland.dao.impl.StyleDAOImpl;
-import com.huang.timberland.domain.Cloth;
-import com.huang.timberland.domain.ShoppingCartItem;
-import com.huang.timberland.domain.Style;
+import com.huang.timberland.dao.*;
+import com.huang.timberland.dao.impl.*;
+import com.huang.timberland.domain.*;
 import com.huang.timberland.web.CriteriaCloth;
 import com.huang.timberland.web.Page;
 
@@ -19,6 +13,9 @@ public class ClothService {
     private ClothDAO clothDAO = new ClothDAOImpl();
     private StyleDAO styleDAO = new StyleDAOImpl();
     private ShoppingCartDAO shoppingCartDAO = new ShoppingCartImpl();
+    private IndentDAO indentDAO = new IndentDAOImpl();
+    private IndentInfoDAO indentInfoDAO = new IndentInfoImpl();
+    private UserDAO userDAO = new UserDAOImpl();
 
     public Style getStyle(int styleId) {
         return styleDAO.getStyle(styleId);
@@ -60,8 +57,8 @@ public class ClothService {
         return shoppingCartItems;
     }
 
-    public double getShoppingCartTotalMoney() {
-        return shoppingCartDAO.getShoppingCartTotalMoney();
+    public double getShoppingCartTotalMoney(int userId) {
+        return shoppingCartDAO.getShoppingCartTotalMoney(userId);
     }
 
     public double getShoppingCartItemMoney(int shoppingCartId) {
@@ -70,5 +67,32 @@ public class ClothService {
 
     public void alterQuantity(int styleId, int quantity) {
         shoppingCartDAO.alterQuantity(styleId, quantity);
+    }
+
+    public void deleteShoppingItem(int shoppingCartItemId) {
+        shoppingCartDAO.deleteShoppingCartItem(shoppingCartItemId);
+    }
+
+    public long createIndent(Indent indent) {
+        return indentDAO.insert(indent);
+    }
+
+    public void deleteShoppingCart(int userId) {
+        shoppingCartDAO.deleteShoppingCart(userId);
+    }
+
+    public void createIndentInfo(IndentInfo indentInfo) {
+        indentInfoDAO.insertIndentInfo(indentInfo);
+    }
+
+    public boolean pay(User user) {
+        double payMoney = user.getU_balance() - getShoppingCartTotalMoney(user.getU_id());
+        if (payMoney < 0) {
+            return false;
+        } else {
+            user.setU_balance((float)(payMoney));
+            userDAO.alterUser(user);
+            return true;
+        }
     }
 }

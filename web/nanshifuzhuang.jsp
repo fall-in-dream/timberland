@@ -53,15 +53,42 @@
 </head>
 <body>
 <%@ include file="top.jsp"%>
+<input type="hidden" value="<%=request.getAttribute("isSuccess")%>" id="status"/>
+<script type="text/javascript" defer="defer">
+	var status = document.getElementById('status').value;
+	if (status === "1") {
+		alert('登录成功')
+	} else if (status === "2") {
+		alert('支付成功欢迎下次光临')
+	} else if (status === "-1") {
+		alert('支付失败！余额不足')
+	}
+</script>
+<%--<c:choose>
+	<c:when test="${isSuccess eq 1}">
+		<script type="text/javascript" defer="defer">
+			window.onload = function() {
+				alert('登录成功');
+			}
+		</script>
+		<%
+			request.removeAttribute("isSuccess");
+		%>
+	</c:when>
+    <c:when test="${isSuccess eq 2}">
+		<script type="text/javascript" defer="defer">
+			window.onload = function() {
+				alert('支付成功欢迎下次光临');
+			}
+		</script>
+		<%
+			request.removeAttribute("isSuccess");
+		%>
+	</c:when>
+	<c:when test="${}"
+</c:choose>--%>
 <c:if test="${isSuccess eq 1}">
-	<script type="text/javascript" defer="defer">
-		window.onload = function() {
-			alert('登录成功');
-		}
-	</script>
-	<%
-		request.removeAttribute("isSuccess");
-	%>
+
 </c:if>
 <div id="daohang">
 	<p><a href="">主页</a>><a href="">男装</a>><a href="">男士服装</a></p>

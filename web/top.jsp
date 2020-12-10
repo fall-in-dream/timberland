@@ -14,7 +14,7 @@
         <ul class="small-menu">
             <li ><a href="Timberland.jsp">首页</a></li>
             <li >
-                <a href="xiaiqingdan.jsp">清单</a>
+                <a href="ClothesServlet?method=order.jsp">订单</a>
                 &nbsp;&nbsp;&nbsp;
 
             </li>
@@ -24,7 +24,8 @@
                 </c:when>
                 <c:otherwise>
                     <li><a href="ClothesServlet?method=getShoppingCart">购物车<span class="badge">${sessionScope.itemNum}</span></a></li>
-                    <li><a href="#">用户名：${sessionScope.user.u_account}</a></li>
+                    <li><a href="UserServlet?method=forwardPage&page=me">用户名：${sessionScope.user.u_account}</a></li>
+                    <li><a href="UserServlet?method=exit">退出</a></li>
                 </c:otherwise>
             </c:choose>
 

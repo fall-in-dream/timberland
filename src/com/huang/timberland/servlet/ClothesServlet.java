@@ -1,10 +1,7 @@
 package com.huang.timberland.servlet;
 
 import com.google.gson.Gson;
-import com.huang.timberland.domain.Cloth;
-import com.huang.timberland.domain.ShoppingCartItem;
-import com.huang.timberland.domain.Style;
-import com.huang.timberland.domain.User;
+import com.huang.timberland.domain.*;
 import com.huang.timberland.service.ClothService;
 import com.huang.timberland.web.CriteriaCloth;
 import com.huang.timberland.web.Page;
@@ -17,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,22 +141,66 @@ public class ClothesServlet extends HttpServlet {
         User user = (User)request.getSession().getAttribute("user");
         List<ShoppingCartItem> shoppingCartItems = clothService.getShoppingCartAllItem(user.getU_id());
         request.setAttribute("shoppingCartItems", shoppingCartItems);
+        request.setAttribute("money", clothService.getShoppingCartTotalMoney(user.getU_id()));
         request.getRequestDispatcher("/gouwuche.jsp").forward(request, response);
     }
 
     protected void updateItemQuantity(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int shoppingCartId = Integer.parseInt(request.getParameter("id"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
+        User user = (User)request.getSession().getAttribute("user");
         clothService.alterQuantity(shoppingCartId, quantity);
         double itemMoney = clothService.getShoppingCartItemMoney(shoppingCartId);
-        double totalMoney = clothService.getShoppingCartTotalMoney();
+        double totalMoney = clothService.getShoppingCartTotalMoney(user.getU_id());
+        HttpSession session = request.getSession();
+        long itemNum = clothService.getShoppingCartItemNum(((User)session.getAttribute("user")).getU_id());
+        session.setAttribute("itemNum", itemNum);
         // 传回json数据
         Map<String, Object> result = new HashMap<>();
         result.put("itemMoney", itemMoney);
         result.put("totalMoney", totalMoney);
+        result.put("itemNum", itemNum);
         Gson gson = new Gson();
         String jsonStr = gson.toJson(result);
         response.setContentType("text/javascript");
         response.getWriter().print(jsonStr);
+    }
+
+    protected void deleteShoppingCartItem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int shoppingCartItemId = Integer.parseInt(request.getParameter("shoppingCartItemId"));
+        clothService.deleteShoppingItem(shoppingCartItemId);
+        HttpSession session = request.getSession();
+        long itemNum = clothService.getShoppingCartItemNum(((User)session.getAttribute("user")).getU_id());
+        session.setAttribute("itemNum", itemNum);
+        getShoppingCart(request, response);
+    }
+
+    protected void settleAccounts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User user = (User)request.getSession().getAttribute("user");
+        boolean isSuccess = clothService.pay(user);
+        if (isSuccess) {
+            List<ShoppingCartItem> shoppingCartItems = clothService.getShoppingCartAllItem(user.getU_id());
+            Indent indent = new Indent();
+            indent.setI_num(String.valueOf(System.currentTimeMillis()));
+            indent.setI_state('0');
+            indent.setU_id(user.getU_id());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Calendar calendar = Calendar.getInstance();
+            indent.setI_time(Timestamp.valueOf(sdf.format(calendar.getTime())));
+            indent.setI_id(clothService.createIndent(indent));
+            clothService.deleteShoppingCart(user.getU_id());
+            IndentInfo indentInfo = new IndentInfo();
+            for (ShoppingCartItem shoppingCartItem: shoppingCartItems) {
+                indentInfo.setF_quantity(shoppingCartItem.getSc_num());
+                indentInfo.setI_id(indent.getI_id());
+                indentInfo.setSt_id(shoppingCartItem.getSt_id());
+                clothService.createIndentInfo(indentInfo);
+            }
+            request.setAttribute("isSuccess", 2);
+            userInfoInit(request, response);
+        } else {
+            request.setAttribute("isSuccess", -1);
+            userInfoInit(request, response);
+        }
     }
 }

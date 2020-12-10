@@ -37,8 +37,14 @@
 				alert("输入的数量不合法!");
 				$(this).val($(this).attr("step"));
 				return;
-			} 
-			
+			}
+
+			//2. 请求地址为: computerServlet
+			var url = "ClothesServlet";
+
+			//3. 请求参数为: method:updateItemQuantity, id:name属性值, quantity:val, time:new Date()
+			var idVal = $.trim(this.name);
+
 			var $tr = $(this).parent().parent();
 			var title = $.trim($tr.find("td:first").text());
 
@@ -46,11 +52,7 @@
 				var flag2 = confirm("确定要删除" + title + "吗?");
 
 				if(flag2){
-					//得到了 a 节点
-					var $a = $tr.find("td:last").find("a");
-					//执行 a 节点的 onclick 响应函数.
-					$a[0].onclick();
-					
+					window.location.href = "ClothesServlet?method=deleteShoppingCartItem&shoppingCartItemId=" + idVal;
 					return;
 				} else {
 					$(this).val($(this).attr("value"));
@@ -62,11 +64,7 @@
 			}
 			
 
-			//2. 请求地址为: computerServlet
-			var url = "ClothesServlet";
-			
-			//3. 请求参数为: method:updateItemQuantity, id:name属性值, quantity:val, time:new Date()
-			var idVal = $.trim(this.name);
+
 			var args = {"method":"updateItemQuantity", "id":idVal, "quantity":quantityVal};
 			
 			//4. 在 updateItemQuantity 方法中, 获取 quanity, id, 再获取购物车对象, 调用 service 的方法做修改
@@ -77,7 +75,9 @@
 			$.post(url, args, function(data){
 				var itemMoney = data.itemMoney;
 				var totalMoney = data.totalMoney;
+				var itemNum = data.itemNum;
 				$tr.find("span").html(itemMoney);
+				$(".badge").html(itemNum);
 				$("#totalMoney").html("商品总金额：CNY:" + totalMoney);
 			},"JSON");
 			

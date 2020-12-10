@@ -28,7 +28,9 @@ public class ShoppingCartImpl extends BaseDAO<ShoppingCartItem> implements Shopp
     @Override
     public long getShoppingCartItemNum(int userId) {
         String sql = "select sum(sc_num) from shopping_cart where u_id = ? group by u_id";
-        return Long.parseLong(getSingleVal(sql, userId).toString());
+        if (getSingleVal(sql, userId) == null) {
+            return 0;
+        } else return Long.parseLong(getSingleVal(sql, userId).toString());
     }
 
     @Override
@@ -38,9 +40,15 @@ public class ShoppingCartImpl extends BaseDAO<ShoppingCartItem> implements Shopp
     }
 
     @Override
-    public double getShoppingCartTotalMoney() {
-        String sql = "select sum(sc_num * c_price) from shopping_cart,clothing,style where shopping_cart.st_id = style.st_id and style.c_id = clothing.c_id";
-        return getSingleVal(sql);
+    public double getShoppingCartTotalMoney(int userId) {
+        String sql = "select sum(sc_num * c_price) from shopping_cart,clothing,style where shopping_cart.st_id = style.st_id and style.c_id = clothing.c_id and " +
+                "shopping_cart.u_id=?";
+
+        if (getSingleVal(sql, userId) == null) {
+            return 0;
+        } else {
+            return getSingleVal(sql, userId);
+        }
     }
 
     @Override
@@ -56,5 +64,16 @@ public class ShoppingCartImpl extends BaseDAO<ShoppingCartItem> implements Shopp
         update(sql, quantity, shoppingCartId);
     }
 
+    @Override
+    public void deleteShoppingCartItem(int shoppingCartItemId) {
+        String sql = "delete from shopping_cart where sc_id = ?";
+        update(sql, shoppingCartItemId);
+    }
+
+    @Override
+    public void deleteShoppingCart(int userId) {
+        String sql = "delete from shopping_cart where u_id = ?";
+        update(sql, userId);
+    }
 
 }

@@ -43,7 +43,7 @@
 			</tbody>
 			<tfoot style="width: 300px;">
 				<tr style="width: 200px;">
-					<td colspan="5" id="totalMoney" style="width: 200px;">商品总金额：CNY:1000</td>
+					<td colspan="5" id="totalMoney" style="width: 200px;">商品总金额：CNY:${money}</td>
 				</tr>
 			</tfoot>
 		</table>

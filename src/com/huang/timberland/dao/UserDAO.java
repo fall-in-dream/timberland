@@ -16,4 +16,10 @@ public interface UserDAO {
      * @return
      */
     public abstract long createUser(User user);
+
+    /**
+     * 修改用户信息
+     * @param user
+     */
+    public abstract void alterUser(User user);
 }

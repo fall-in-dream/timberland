@@ -10,6 +10,8 @@ public class User {
 
     private float u_balance;
 
+    private String u_head;
+
     public String getU_account() {
         return u_account;
     }
@@ -40,5 +42,13 @@ public class User {
 
     public void setU_balance(float u_balance) {
         this.u_balance = u_balance;
+    }
+
+    public String getU_head() {
+        return u_head;
+    }
+
+    public void setU_head(String u_head) {
+        this.u_head = u_head;
     }
 }

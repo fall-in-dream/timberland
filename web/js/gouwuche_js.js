@@ -51,6 +51,5 @@ function _2jianyi(){
 }
 
 function pay(){
-	var mon = document.getElementById('total').value;
-	alert("已支付"+mon+"元，谢谢惠顾！");
+	window.location.href="ClothesServlet?method=settleAccounts"
 }
